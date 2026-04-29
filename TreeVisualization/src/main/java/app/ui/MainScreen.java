@@ -4,6 +4,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
+import main.java.app.engine.StepPlayer;
 import main.java.app.core.Node;
 import main.java.app.core.tree.*;
 import main.java.app.algorithm.*;
@@ -14,9 +15,10 @@ public class MainScreen {
 	private Label label = new Label("Ready");
 	private Button button = new Button("Run Inorder");
 
-	private BinaryTree tree = new BinaryTree();
+	private BinaryTree tree = new BinaryTree();				//testing purpose
 	private TraversalAlgorithm algo = new TraversalAlgorithm();
-    
+    private StepPlayer player = new StepPlayer();
+	
 	public MainScreen() {
         // Hardcoded tree
 		tree.insert(10);
@@ -58,22 +60,6 @@ public class MainScreen {
             drawNode(node.right, x + offset, y + 70, offset / 2);
         }
     }
-    private void runTraversal() {
-        List<Step> steps = algo.inOrderSteps(tree.root);
-
-        new Thread(() -> {
-            for (Step step : steps) {
-                try {
-                    Thread.sleep(800);
-                } catch (InterruptedException e) {}
-
-                javafx.application.Platform.runLater(() -> {
-                    label.setText(step.description);
-                    highlight(step.node);
-                });
-            }
-        }).start();
-    }
     private void highlight(Node target) {
         drawTree();
         highlightRec(tree.root, target, 400, 50, 200);
@@ -89,5 +75,12 @@ public class MainScreen {
         }
         highlightRec(node.left, target, x - offset, y + 70, offset / 2);
         highlightRec(node.right, target, x + offset, y + 70, offset / 2);
+    }
+    private void runTraversal() {
+        List<Step> steps = algo.inOrderSteps(tree.root);
+        player.play(steps, step -> {
+        	label.setText(step.description);
+        	highlight(step.node);
+        });
     }
 }
