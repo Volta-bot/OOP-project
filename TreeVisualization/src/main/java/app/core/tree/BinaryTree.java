@@ -31,46 +31,4 @@ public class BinaryTree {
 		else if(value < node.value) return searchRec(node.left,value);
 		else return searchRec(node.right,value);
 	}
-	//==========================
-	//INORDER TRAVERSAL
-	//==========================
-	public List<Node> inOrder(){
-		List<Node> result = new ArrayList<>();
-		inOrderRec(root,result);
-		return result;
-	}
-	private void inOrderRec(Node node, List<Node> result){
-		if(node == null) return;
-		inOrderRec(node.left,result);
-		result.add(node);
-		inOrderRec(node.right,result);
-	}
-	//==========================
-	//PREORDER TRAVERSAL
-	//==========================
-	public List<Node> preOrder(){
-		List<Node> result = new ArrayList<>();
-		preOrderRec(root,result);
-		return result;
-	}
-	private void preOrderRec(Node node, List<Node> result){
-		if(node == null) return;
-		result.add(node);
-		preOrderRec(node.left,result);
-		preOrderRec(node.right,result);
-	}
-	//==========================
-	//POSTORDER TRAVERSAL
-	//==========================
-	public List<Node> postOrder(){
-		List<Node> result = new ArrayList<>();
-		postOrderRec(root,result);
-		return result;
-	}
-	private	 void postOrderRec(Node node, List<Node> result){
-		if(node == null) return;
-		postOrderRec(node.left,result);
-		postOrderRec(node.right,result);
-		result.add(node);
-	}
 }
